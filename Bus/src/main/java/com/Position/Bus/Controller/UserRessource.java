@@ -97,6 +97,22 @@ public ResponseEntity<String> assignBusToUser(@PathVariable Long userId, @PathVa
         return new ResponseEntity<>("Error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+    @GetMapping("/busbyiduser/{userId}")
+    public ResponseEntity<Bus> getBusByUserId(@PathVariable Long userId) {
+      Bus bus= this.userService.getBusByUser(userId);
+        return new ResponseEntity<>(bus, HttpStatus.OK);
+    }
+    @PostMapping("/add")
+
+    public ResponseEntity<String> saveUser(@RequestBody User user) {
+        try {
+            userService.addUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
+        }
+    }
 }
 
 

@@ -12,5 +12,6 @@ public interface UserServiceInterface {
     User getUserByCode(String userCode );
 
     List<User> getUsersByBus(Bus bus);
+    Bus getBusByUser(Long id);
     // void deleteUserById(Long id);
 }
