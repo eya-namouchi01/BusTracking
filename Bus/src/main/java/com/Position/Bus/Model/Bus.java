@@ -32,8 +32,8 @@ public class Bus implements Serializable {
     private List<User> users;
 
 
-//    @OneToOne
-//    private Circuit circuit;
+ @OneToOne
+ private Circuit circuit;
 
     // @Column(name="position")
 //    Map<String, Double> position;
