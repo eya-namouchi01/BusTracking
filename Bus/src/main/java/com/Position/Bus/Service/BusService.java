@@ -1,9 +1,9 @@
 package com.Position.Bus.Service;
 
 import com.Position.Bus.Exeption.UserNotFoundException;
-import com.Position.Bus.Model.Bus;
-import com.Position.Bus.Model.User;
+import com.Position.Bus.Model.*;
 import com.Position.Bus.Repository.BusRepository;
+import com.Position.Bus.Repository.CircuitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,8 @@ public class BusService implements BusServiceInterface {
 
     @Autowired(required=true)
     private BusRepository busRepository;
+    @Autowired
+    private CircuitRepository circuitRepository;
 
  //   @Override
 //    public void saveBus() {
@@ -82,6 +84,20 @@ public class BusService implements BusServiceInterface {
     public Bus getBusById(Long id) {
         Optional<Bus> bus = busRepository.findById(id);
         return bus.orElse(null);
+    }
+
+    public Bus affectBusToCircuit(Long idBus, Long idCircuit)
+    {
+       Optional<Bus> bus = busRepository.findById(idBus);
+        Optional<Circuit> circuit = circuitRepository.findById(idCircuit);
+       bus.get().setCircuit(circuit.get());
+        return busRepository.save(bus.get());
+
+
+
+
+
+
     }
 
 

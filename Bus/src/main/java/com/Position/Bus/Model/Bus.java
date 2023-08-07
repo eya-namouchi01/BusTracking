@@ -13,7 +13,6 @@ import java.util.*;
 @Data
 @Getter
 @Setter
-
 public class Bus implements Serializable {
     @Id
     @Column(nullable = false , updatable = false)
@@ -35,5 +34,9 @@ public class Bus implements Serializable {
     private Circuit circuit;
     public List<User> getUsers() {
         return this.users;
+    }
+
+    public void setCircuit(Circuit circuit) {
+        this.circuit = circuit;
     }
 }

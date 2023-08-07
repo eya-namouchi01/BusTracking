@@ -5,6 +5,7 @@ import com.Position.Bus.Model.Bus;
 import com.Position.Bus.Model.User;
 import com.Position.Bus.Repository.BusRepository;
 import com.Position.Bus.Repository.UserRepository;
+import com.Position.Bus.Service.BusService;
 import com.Position.Bus.Service.BusServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,6 +73,13 @@ public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to update bus position.");
         }
+    }
+
+    @PostMapping("affecterBusCircuit/{idBus}/{idCircuit}")
+    public String  affectBusToCircuit(@PathVariable Long idBus,@PathVariable Long idCircuit)
+    {
+        busService.affectBusToCircuit(idBus, idCircuit);
+        return "affected";
     }
 //    @PutMapping("/{UserId}/{busId}")
 //    User assignBusToUser(
