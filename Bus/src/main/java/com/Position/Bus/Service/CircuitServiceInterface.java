@@ -4,12 +4,13 @@ import com.Position.Bus.Model.Circuit;
 import com.Position.Bus.Model.Station;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CircuitServiceInterface {
-        Circuit addCircuit(Circuit circuit);
+        String addCircuit(Circuit circuit);
         List<Circuit> getAllCircuits();
-        List<Station> getCircuitStationsbyCircuitId(Long id);
-//    Circuit getCircuitById(Long id);
+        Optional<List<Station>> getCircuitStationsByCircuitId(long id);
+        Optional<Circuit> getCircuitById(Long id);
 //    Circuit updateCircuit(Circuit circuit);
 //    void deleteCircuit(Long id);
 //    Circuit addCircuit(Circuit circuit, List<Station> stations);

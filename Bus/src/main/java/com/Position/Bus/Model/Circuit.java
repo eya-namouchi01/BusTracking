@@ -18,6 +18,7 @@ public class Circuit {
     private String nom;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "circuit")
     private List<Station> stations;
 

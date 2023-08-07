@@ -1,6 +1,5 @@
 package com.Position.Bus.Service;
 
-import com.Position.Bus.Exeption.UserNotFoundException;
 import com.Position.Bus.Model.Circuit;
 import com.Position.Bus.Model.CircuitDetails;
 import com.Position.Bus.Model.Station;
@@ -26,7 +25,7 @@ public class CircuitService implements  CircuitServiceInterface{
     }
 
     public List<Circuit> getAllCircuits() {
-        List<CircuitDetails> circuitDetailsList = circuitRepository.getCircuitDetails();
+       List<CircuitDetails> circuitDetailsList = circuitRepository.getCircuitDetails();
         List<Circuit> circuits = new ArrayList<>();
 
         for (CircuitDetails circuitDetails : circuitDetailsList) {
@@ -34,14 +33,30 @@ public class CircuitService implements  CircuitServiceInterface{
 
             circuits.add(circuit);
         }
-       // System.out.println(stationRepository.getListStationById(302L));
+
 
         return circuits;
+        // System.out.println(stationRepository.getListStationById(302L));
+       // return circuitRepository.findAll();
     }
 
-    public List<Station> getCircuitStationsbyCircuitId(Long id)
+    @Override
+    public Optional<List<Station>> getCircuitStationsByCircuitId(long id) {
+        Optional<Circuit> circuit = circuitRepository.findById(id);
+
+        if (circuit.isPresent()) {
+            Optional<List<Station>> stations = stationRepository.getStationsByCircuit(circuit.get());
+            return stations;
+        }
+        return null;
+    }
+
+
+
+
+    public Optional<Circuit> getCircuitById(Long id)
     {
-       return  stationRepository.getListStationById(id);
+       return circuitRepository.findById(id);
     }
 
 
@@ -60,7 +75,7 @@ public class CircuitService implements  CircuitServiceInterface{
         circuit.setStations();
         return circuitRepository.save(circuit);*/
 
-       public Circuit addCircuit(Circuit circuit) {
+       public String addCircuit(Circuit circuit) {
             Circuit circuit1 = new Circuit(circuit.getNom());
             circuitRepository.save(circuit1);
             Long maxId = circuitRepository.findMaxId();
@@ -70,17 +85,12 @@ public class CircuitService implements  CircuitServiceInterface{
                stationRepository.setIdCircuit(maxId, station.getId());
 
             }
-            return circuit;
+            return "circuit created";
         }
 
 
 
 
 
-//    public Circuit updateCircuit(Circuit circuit) {
-//        return this.circuitRepository.save(circuit);}
-//
-//    public void deleteCircuit(Long id) {
-//        this.circuitRepository.deleteById(id);
-//    }
+
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -27,7 +28,7 @@ public class CircuitRessource {
     }
 
     @PostMapping("/addCircuit")
-    public ResponseEntity<Circuit> addCircuit(@RequestBody Circuit circuit) {
+    public ResponseEntity<String> addCircuit(@RequestBody Circuit circuit) {
             return new ResponseEntity<> (this.circuitService.addCircuit(circuit), HttpStatus.CREATED);
     }
 
@@ -39,27 +40,20 @@ public class CircuitRessource {
 
     @GetMapping("/StationsbyCircuitId/{id}")
     public ResponseEntity<List<Station>> getStationsbyCircuitId(@PathVariable Long id) {
-        List<Station> circuits=this.circuitService.getCircuitStationsbyCircuitId(id);
-        return new ResponseEntity<>(circuits,HttpStatus.OK);
-    }
-    @GetMapping("/hello/{id}")
-    public String hello(@PathVariable String id) {
-        return "hello id"+id;
+        Optional<List<Station>> circuits=this.circuitService.getCircuitStationsByCircuitId(id);
+
+        return new ResponseEntity<>(circuits.get(),HttpStatus.OK);
     }
 
 
 
-    @GetMapping("/getCircuitById/{id}")
-    public ResponseEntity<List<Station>>getCircuitById(@PathVariable Long id) {
-        List<Station> stations = circuitService.getCircuitStationsbyCircuitId(id);
-        return new ResponseEntity(stations, HttpStatus.OK);
+    @GetMapping("/CircuitById/{id}")
+    public ResponseEntity<Circuit>getCircuitById(@PathVariable Long id) {
+        Optional<Circuit> circuit = circuitService.getCircuitById(id);
+        return new ResponseEntity(circuit, HttpStatus.OK);
     }
 
-//
-//    @PutMapping("/editCircuit/{circuitId}")
-//    public ResponseEntity<Circuit> updateCircuit(@RequestBody Circuit circuit){
-//        return new ResponseEntity<> (this.circuitService.updateCircuit(circuit), HttpStatus.CREATED);
-//    }
+
 
     }
 
