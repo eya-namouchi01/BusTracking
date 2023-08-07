@@ -1,6 +1,7 @@
 package com.Position.Bus.Service;
 
 import com.Position.Bus.Model.*;
+import com.Position.Bus.Repository.BusRepository;
 import com.Position.Bus.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.*;
 public class UserService implements UserServiceInterface{
     @Autowired(required=true)
     private  UserRepository userRepository;
+    private BusRepository busRepository;
 
     @Override
     public List<User> getAll() {
@@ -40,6 +42,11 @@ public class UserService implements UserServiceInterface{
     public List<User> getUsersByBus(Bus bus ) {
         Optional<List<User> > user = userRepository.findByBus(bus );
         return user.orElse(null);
+    }
+    public Bus getBusByUser(Long id) {
+        Optional<User > user = userRepository.findById(id);
+        Bus bus = user.get().getBus();
+        return bus;
     }
 
 

@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-//@Table(name="bus")
 @Data
 @Getter
 @Setter
@@ -22,7 +21,6 @@ public class Bus implements Serializable {
     private Long id;
   //  private Long numChauffeur;
 
-   // static public Double longitude;
     private Double longitude;
     private Double latitude;
 
@@ -32,12 +30,8 @@ public class Bus implements Serializable {
     private List<User> users;
 
 
-//    @OneToOne
-//    private Circuit circuit;
-
-    // @Column(name="position")
-//    Map<String, Double> position;
-
+    @OneToOne
+    private Circuit circuit;
 
     public List<User> getUsers() {
         return this.users;
