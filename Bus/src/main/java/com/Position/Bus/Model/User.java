@@ -19,7 +19,6 @@ public class User{
 @Column(nullable = false , updatable = false)
 @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     // static public Double longitude;
     private String userCode;
 //    private Double UserStationLatitude;

@@ -92,12 +92,6 @@ public class BusService implements BusServiceInterface {
         Optional<Circuit> circuit = circuitRepository.findById(idCircuit);
        bus.get().setCircuit(circuit.get());
         return busRepository.save(bus.get());
-
-
-
-
-
-
     }
 
 
