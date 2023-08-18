@@ -3,6 +3,7 @@ package com.Position.Bus.Controller;
 
 import com.Position.Bus.Model.Bus;
 import com.Position.Bus.Model.Circuit;
+import com.Position.Bus.Model.CircuitStations;
 import com.Position.Bus.Model.Station;
 import com.Position.Bus.Service.CircuitService;
 import com.Position.Bus.Service.CircuitServiceInterface;
@@ -27,8 +28,8 @@ public class CircuitRessource {
         this.circuitService = (CircuitService) circuitService;
     }
 
-    @PostMapping("/addCircuit")
-    public ResponseEntity<String> addCircuit(@RequestBody Circuit circuit) {
+    @PostMapping("/add")
+    public ResponseEntity<String> addCircuit(@RequestBody CircuitStations circuit) {
             return new ResponseEntity<> (this.circuitService.addCircuit(circuit), HttpStatus.CREATED);
     }
 

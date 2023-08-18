@@ -14,6 +14,7 @@ public interface CircuitRepository extends JpaRepository<Circuit,Long> {
     @Query("SELECT MAX(c.id) FROM Circuit c")
     Long findMaxId();
 
+
     @Query("SELECT NEW com.Position.Bus.Model.CircuitDetails(c.id, c.nom) FROM Circuit c")
     List<CircuitDetails> getCircuitDetails();
 

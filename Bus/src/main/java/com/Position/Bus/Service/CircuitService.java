@@ -2,6 +2,7 @@ package com.Position.Bus.Service;
 
 import com.Position.Bus.Model.Circuit;
 import com.Position.Bus.Model.CircuitDetails;
+import com.Position.Bus.Model.CircuitStations;
 import com.Position.Bus.Model.Station;
 import com.Position.Bus.Repository.CircuitRepository;
 import com.Position.Bus.Repository.StationRepository;
@@ -22,6 +23,11 @@ public class CircuitService implements  CircuitServiceInterface{
     public CircuitService(CircuitRepository circuitRepository, StationRepository stationRepository) {
         this.circuitRepository = circuitRepository;
         this.stationRepository = stationRepository;
+    }
+
+    @Override
+    public String addCircuit(Circuit circuit) {
+        return null;
     }
 
     public List<Circuit> getAllCircuits() {
@@ -75,16 +81,22 @@ public class CircuitService implements  CircuitServiceInterface{
         circuit.setStations();
         return circuitRepository.save(circuit);*/
 
-       public String addCircuit(Circuit circuit) {
-            Circuit circuit1 = new Circuit(circuit.getNom());
+       public String addCircuit(CircuitStations circuit) {
+           Circuit circuit1 = new Circuit(circuit.getNom());
             circuitRepository.save(circuit1);
-            Long maxId = circuitRepository.findMaxId();
+           Long maxId = circuitRepository.findMaxId();
+           Optional<Circuit> circuitfinal = circuitRepository.findById(maxId);
+           System.out.println(maxId);
             for (Station station : circuit.getStations() )
             {
+                System.out.println(station);
                Long idStat = station.getId();
-               stationRepository.setIdCircuit(maxId, station.getId());
+              station.setCircuit(circuitfinal.get());
+
+               stationRepository.save(station);
 
             }
+
             return "circuit created";
         }
 
