@@ -18,6 +18,7 @@ public class Bus implements Serializable {
     @Column(nullable = false , updatable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String bus;
   //  private Long numChauffeur;
 
     private Double longitude;

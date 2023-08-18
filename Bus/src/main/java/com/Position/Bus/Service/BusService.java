@@ -94,5 +94,11 @@ public class BusService implements BusServiceInterface {
         return busRepository.save(bus.get());
     }
 
+    public Bus updateBus(Bus bus) {
+       return this.busRepository.save(bus);}
+
+    public void deleteBus(Long id) {
+        this.busRepository.deleteById(id);
+    }
 
 }

@@ -92,6 +92,24 @@ public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
 //        return userRepository.save(user);
 //    }
 
+
+    @PutMapping("/edit")
+    public ResponseEntity<Bus> updateBus(@RequestBody Bus bus)
+    {
+        return new ResponseEntity<> (this.busService.updateBus(bus), HttpStatus.CREATED);
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteBus(@RequestParam("id") Long id){
+        this.busService.deleteBus(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/find")
+    public ResponseEntity<Bus> getBusById(@RequestParam("id") Long id){
+        Bus bus= this.busService.getBusById(id);
+        return new ResponseEntity<>(bus,HttpStatus.OK);
+    }
+
+
 }
 
 
