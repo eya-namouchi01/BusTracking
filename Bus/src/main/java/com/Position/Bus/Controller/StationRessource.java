@@ -43,6 +43,18 @@ public class StationRessource {
         Station station = stationService.getStationByID(id);
         return new ResponseEntity(station, HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    public void  deleteStation(@PathVariable Long id)
+    {
+        stationService.deleteStation(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updateStation(@RequestBody Station station, @PathVariable Long id)
+    {
+        stationService.updateStation(id,station);
+
+    }
 
 
 //    @PutMapping("/editCircuit/{circuitId}")

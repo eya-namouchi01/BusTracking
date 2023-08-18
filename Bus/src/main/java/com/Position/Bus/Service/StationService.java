@@ -30,6 +30,14 @@ public class StationService {
        return stationRepository.save(station);
    }
 
+    public void deleteStation(Long id) {
+        stationRepository.deleteById(id);
+    }
+
+    public void updateStation(Long id, Station station) {
+        station.setId(id);
+        stationRepository.save(station);
+    }
 
 
 //
