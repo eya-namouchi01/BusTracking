@@ -92,13 +92,13 @@ public class BusService implements BusServiceInterface {
         Optional<Circuit> circuit = circuitRepository.findById(idCircuit);
        bus.get().setCircuit(circuit.get());
         return busRepository.save(bus.get());
-
-
-
-
-
-
     }
 
+    public Bus updateBus(Bus bus) {
+       return this.busRepository.save(bus);}
+
+    public void deleteBus(Long id) {
+        this.busRepository.deleteById(id);
+    }
 
 }

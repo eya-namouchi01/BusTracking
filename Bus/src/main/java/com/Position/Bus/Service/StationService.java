@@ -38,14 +38,5 @@ public class StationService {
         station.setId(id);
         stationRepository.save(station);
     }
-
-
-//
-//    public Station updateStation(Station station) {
-//       return this.stationRepository.save(station);}
-//
-//    public void deleteStation(Long id) {
-//        this.stationRepository.deleteById(id);
-//    }
 }
 

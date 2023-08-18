@@ -20,5 +20,7 @@ public interface BusServiceInterface {
     void updateBusPositionById(Long idBus, Double newLatitude, Double newLongitude);
 
     Bus affectBusToCircuit(Long idBus, Long idCircuit);
+    Bus updateBus(Bus bus);
+    void deleteBus(Long id);
 
 }
