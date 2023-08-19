@@ -38,5 +38,15 @@ public class StationService {
         station.setId(id);
         stationRepository.save(station);
     }
+
+    public List<Station> getStationsNotAffected() {
+        return stationRepository.getListStationNotAffected();
+    }
+
+    public List<Station> getStationsAffectedAndNotAffected(Long id) {
+        return stationRepository.getStationsAffectedAndNotAffected(id);
+    }
+
+
 }
 

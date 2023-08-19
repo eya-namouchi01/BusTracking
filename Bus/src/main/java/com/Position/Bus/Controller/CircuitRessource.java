@@ -53,7 +53,20 @@ public class CircuitRessource {
         Optional<Circuit> circuit = circuitService.getCircuitById(id);
         return new ResponseEntity(circuit, HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    public void deleteCircuit(@PathVariable Long id)
+    {
+        circuitService.deleteCircuit(id);
+    }
 
+
+    @PutMapping("/{id}/{nom}")
+    public void updateCircuit(@PathVariable Long id,@PathVariable String nom, @RequestBody List<Station> stations)
+    {
+        System.out.println(nom);
+
+        circuitService.update(id,nom,stations);
+    }
 
 
     }

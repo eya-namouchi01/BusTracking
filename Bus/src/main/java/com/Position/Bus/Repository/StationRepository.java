@@ -21,11 +21,17 @@ public interface StationRepository extends JpaRepository<Station,Long> {
     @Transactional
     @Query("UPDATE Station s SET s.circuit.id = :idCircuit WHERE s.id = :idStation")
     void setIdCircuit(Long idCircuit, Long idStation);
-
-  /*  @Query("SELECT s FROM Station s WHERE s.circuit.id = :id")
-    List<Station> getListStationById(@Param("id") Long id);*/
+    @Query("SELECT s FROM Station s WHERE s.circuit.id = null ")
+    List<Station> getListStationNotAffected();
 
    Optional<List<Station>>  getStationsByCircuit(Circuit circuit);
+
+    @Modifying
+    @Query("UPDATE Station s SET s.circuit.id = null WHERE s.circuit.id = :idCircuit")
+    int setStationCircuitIdNull(Long idCircuit);
+
+    @Query("SELECT s FROM Station s WHERE s.circuit.id = null or s.circuit.id = :id")
+    List<Station> getStationsAffectedAndNotAffected(Long id);
 
 
 

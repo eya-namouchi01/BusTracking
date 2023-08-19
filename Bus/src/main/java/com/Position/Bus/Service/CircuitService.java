@@ -1,5 +1,5 @@
 package com.Position.Bus.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.Position.Bus.Model.Circuit;
 import com.Position.Bus.Model.CircuitDetails;
 import com.Position.Bus.Model.CircuitStations;
@@ -68,19 +68,6 @@ public class CircuitService implements  CircuitServiceInterface{
 
 
 
-
-//    public Circuit getCircuitById(Long id) {
-//        return circuitRepository.findById(id)
-//                .orElseThrow(() -> new UserNotFoundException("Circuit"+id+"was not found"));
-//    }
-//
-  /*  public Circuit addCircuit(Long StationId,Circuit circuit) {
-     Station station =this.stationRepository.findById(StationId)
-     .orElseThrow(( )-> new UserNotFoundException("Station with ID"+StationId+"was not found"));}
-
-        circuit.setStations();
-        return circuitRepository.save(circuit);*/
-
        public String addCircuit(CircuitStations circuit) {
            Circuit circuit1 = new Circuit(circuit.getNom());
             circuitRepository.save(circuit1);
@@ -94,15 +81,36 @@ public class CircuitService implements  CircuitServiceInterface{
               station.setCircuit(circuitfinal.get());
 
                stationRepository.save(station);
-
             }
-
             return "circuit created";
         }
 
 
+    @Transactional
+    public void deleteCircuit(Long id) {
+        stationRepository.setStationCircuitIdNull(id);
+        circuitRepository.deleteById(id);
+    }
 
+    @Transactional
+    public void update(Long id, String nom, List<Station> stations) {
+        Optional<Circuit> c =circuitRepository.findById(id);
+        if(c.isPresent())
+        {
+            Circuit circuit = c.get();
+            if(!circuit.getNom().equals(nom))
+            {
+                circuit.setNom(nom);
+                circuitRepository.save(circuit);
+            }
+            stationRepository.setStationCircuitIdNull(id);
+            for (Station station : stations )
+            {
+                station.setCircuit(circuit);
+                stationRepository.save(station);
+            }
 
+        }
 
-
+    }
 }

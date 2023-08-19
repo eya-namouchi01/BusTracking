@@ -38,6 +38,18 @@ public class StationRessource {
         List<Station> stations=this.stationService.getAllStations();
         return new ResponseEntity<>(stations,HttpStatus.OK);
     }
+    @GetMapping("/allNotAffected")
+    public ResponseEntity<List<Station>> getStationsNotAffected() {
+        List<Station> stations=this.stationService.getStationsNotAffected();
+        return new ResponseEntity<>(stations,HttpStatus.OK);
+    }
+    @GetMapping("/AffectedAndNotAffected/{id}")
+    public ResponseEntity<List<Station>> getStationsAffectedAndNotAffected(@PathVariable Long id) {
+        List<Station> stations=this.stationService.getStationsAffectedAndNotAffected(id);
+        return new ResponseEntity<>(stations,HttpStatus.OK);
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Circuit>getStationByID(@PathVariable Long id) {
         Station station = stationService.getStationByID(id);
@@ -53,14 +65,7 @@ public class StationRessource {
     public void updateStation(@RequestBody Station station, @PathVariable Long id)
     {
         stationService.updateStation(id,station);
-
     }
-
-
-//    @PutMapping("/editCircuit/{circuitId}")
-//    public ResponseEntity<Station> updateStation(@RequestBody Station station){
-//        return new ResponseEntity<> (this.stationService.updateStation(station), HttpStatus.CREATED);
-//    }
 }
 
 
