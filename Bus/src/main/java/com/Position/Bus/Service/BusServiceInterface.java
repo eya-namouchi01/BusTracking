@@ -2,9 +2,11 @@ package com.Position.Bus.Service;
 
 
 import com.Position.Bus.Model.Bus;
+import com.Position.Bus.Model.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface BusServiceInterface {
 
@@ -22,5 +24,6 @@ public interface BusServiceInterface {
     Bus affectBusToCircuit(Long idBus, Long idCircuit);
     Bus updateBus(Bus bus);
     void deleteBus(Long id);
+    Optional<List<User>> getUsersByBusId(long id);
 
 }

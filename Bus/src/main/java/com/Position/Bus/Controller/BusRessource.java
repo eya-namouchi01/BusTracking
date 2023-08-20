@@ -1,7 +1,8 @@
 package com.Position.Bus.Controller;
 
 
-import com.Position.Bus.Model.Bus;
+import com.Position.Bus.Model.*;
+import com.Position.Bus.Model.Station;
 import com.Position.Bus.Model.User;
 import com.Position.Bus.Repository.BusRepository;
 import com.Position.Bus.Repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -108,6 +110,13 @@ public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
         Bus bus= this.busService.getBusById(id);
         return new ResponseEntity<>(bus,HttpStatus.OK);
     }
+    @GetMapping("/UsersByBusId/{id}")
+    public ResponseEntity<List<User>> getUsersByBusId(@PathVariable Long id) {
+        Optional<List<User>> users=this.busService.getUsersByBusId(id);
+
+        return new ResponseEntity<>(users.get(),HttpStatus.OK);
+    }
+
 
 
 }
