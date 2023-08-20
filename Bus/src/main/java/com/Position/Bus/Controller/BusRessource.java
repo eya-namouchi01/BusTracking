@@ -98,8 +98,8 @@ public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
     {
         return new ResponseEntity<> (this.busService.updateBus(bus), HttpStatus.CREATED);
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteBus(@RequestParam("id") Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBus(@PathVariable("id") Long id){
         this.busService.deleteBus(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

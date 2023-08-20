@@ -33,21 +33,12 @@ public class UserRessource {
         this.busService = busService;
     }
 
-    //    @PostMapping("/addBus")
-//    public ResponseEntity<String> saveBus() {
-//      try {
-//            busService.saveBus();
-//            return ResponseEntity.status(HttpStatus.CREATED).body("Position created successfully");
-//       } catch (Exception e) {
-//          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//
-//      }
-//    }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getAll() {
-        List<User> users = this.userService.getAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+
+    @GetMapping("/allUsers")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users=this.userService.getAll();
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
     @GetMapping("/Code/{userCode}")
     public ResponseEntity<User> getUserByUser(@PathVariable String userCode) {

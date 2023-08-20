@@ -9,7 +9,7 @@ public interface StationServiceInterface {
   Station getStationByID(Long id);
   Station addstation(Station station);
 
-
+  void deleteStation(Long id);
 //    Station updateStation(Station station);
 //    void deleteStation(Long id);
 
