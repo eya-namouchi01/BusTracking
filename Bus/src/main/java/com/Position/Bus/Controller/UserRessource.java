@@ -35,7 +35,7 @@ public class UserRessource {
 
 
 
-    @GetMapping("/allUsers")
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users=this.userService.getAll();
         return new ResponseEntity<>(users,HttpStatus.OK);
