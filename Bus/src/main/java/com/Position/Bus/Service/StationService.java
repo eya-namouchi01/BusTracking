@@ -31,6 +31,7 @@ public class StationService {
    }
 
     public void deleteStation(Long id) {
+        stationRepository.disassociateCircuit(id);
         stationRepository.deleteById(id);
     }
 

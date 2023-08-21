@@ -33,6 +33,10 @@ public interface StationRepository extends JpaRepository<Station,Long> {
     @Query("SELECT s FROM Station s WHERE s.circuit.id = null or s.circuit.id = :id")
     List<Station> getStationsAffectedAndNotAffected(Long id);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE Station s SET s.circuit = null WHERE s.id = :stationId")
+    void disassociateCircuit(Long stationId);
 
 
 
