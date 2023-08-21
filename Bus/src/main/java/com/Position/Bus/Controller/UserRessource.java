@@ -113,6 +113,12 @@ public ResponseEntity<String> assignBusToUser(@PathVariable Long userId, @PathVa
 
         }
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id)
+    {
+        userRepository.deleteById(id);
+    }
 }
 
 
