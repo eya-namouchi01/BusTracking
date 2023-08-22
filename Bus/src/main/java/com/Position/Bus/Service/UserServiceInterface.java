@@ -13,5 +13,7 @@ public interface UserServiceInterface {
 
     List<User> getUsersByBus(Bus bus);
     Bus getBusByUser(Long id);
+
+    void affectUsersToBus(Long id, List<User> users);
     // void deleteUserById(Long id);
 }

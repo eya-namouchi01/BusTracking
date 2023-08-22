@@ -12,7 +12,7 @@ public interface BusServiceInterface {
 
  //  void saveBus();
  Bus getBusById(Long id);
-    void saveBus(Bus bus);
+    Long saveBus(Bus bus);
 
     //  Map<String, Double> generateRandomPosition();
     List<Bus> getAllBus();

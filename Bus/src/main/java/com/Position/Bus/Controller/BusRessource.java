@@ -41,14 +41,11 @@ public class BusRessource {
 //    }
 @PostMapping("/add")
 
-public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
-    try {
-        busService.saveBus(bus);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Bus created successfully");
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+public Long saveBus(@RequestBody Bus bus) {
 
-    }
+       return busService.saveBus(bus);
+
+
 }
 
     @GetMapping("/all")
@@ -95,9 +92,10 @@ public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
 //    }
 
 
-    @PutMapping("/edit")
-    public ResponseEntity<Bus> updateBus(@RequestBody Bus bus)
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Bus> updateBus(@RequestBody Bus bus, @PathVariable Long id)
     {
+        bus.setId(id);
         return new ResponseEntity<> (this.busService.updateBus(bus), HttpStatus.CREATED);
     }
     @DeleteMapping("/delete/{id}")
@@ -105,6 +103,7 @@ public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
         this.busService.deleteBus(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/find")
     public ResponseEntity<Bus> getBusById(@RequestParam("id") Long id){
         Bus bus= this.busService.getBusById(id);
@@ -116,6 +115,8 @@ public ResponseEntity<String> saveBus(@RequestBody Bus bus) {
 
         return new ResponseEntity<>(users.get(),HttpStatus.OK);
     }
+
+
 
 
 
