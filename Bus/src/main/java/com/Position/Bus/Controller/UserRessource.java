@@ -33,7 +33,8 @@ public class UserRessource {
     }
 
 
-    @GetMapping("/allUsers")
+
+    @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = this.userService.getAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -112,29 +113,10 @@ public class UserRessource {
         }
     }
 
-    @PostMapping("/affectToThisBus/{busId}")
-    public ResponseEntity<String> affectBusToUser(@PathVariable Long busId, @RequestBody List<User> users) {
-        for (User user : users) {
-            try {
-                Bus bus = busService.getBusById(busId);
-                if (bus == null) {
-                    return new ResponseEntity<>("Bus not found", HttpStatus.NOT_FOUND);
-                }
-
-
-                user = userService.getUserById(user.getId());
-                if (user == null) {
-                    return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-                }
-                user.setBus(bus);
-                userService.addUser(user);
-
-
-            } catch (Exception e) {
-                return new ResponseEntity<>("Error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-        return new ResponseEntity<>("Bus assigned to user successfully", HttpStatus.OK);
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id)
+    {
+        userRepository.deleteById(id);
     }
 }
 
