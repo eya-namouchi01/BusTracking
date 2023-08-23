@@ -70,13 +70,23 @@ public class UserService implements UserServiceInterface{
 
 
     }
+
+    @Override
+    public List<User> getStationsAffectedAndNotAffected(Long id) {
+        return userRepository.getStationsAffectedAndNotAffected(id);
+    }
+
+
+    @Override
     public List<User> getUserNotAffected()
     {
         return userRepository.getListUserNotAffected();
     }
-    public List<User> getAffectedAndNotAffectedUser(Long id)
+
+    @Override
+    public List<User> getAffectedUser(Long id)
     {
-        return userRepository.getStationsAffectedAndNotAffected(id);
+        return userRepository.getAffectedUser(id);
     }
 
 

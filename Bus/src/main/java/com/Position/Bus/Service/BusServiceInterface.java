@@ -26,4 +26,7 @@ public interface BusServiceInterface {
     void deleteBus(Long id);
     Optional<List<User>> getUsersByBusId(long id);
 
+   void affectUserToBus(Long userId, Long busId);
+
+    void affectUsersListToBus(Long busId, List<User> users);
 }

@@ -4,6 +4,7 @@ import com.Position.Bus.Model.*;
 import com.Position.Bus.Repository.BusRepository;
 import com.Position.Bus.Repository.UserRepository;
 import com.Position.Bus.Service.BusServiceInterface;
+import com.Position.Bus.Service.UserService;
 import com.Position.Bus.Service.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,16 +21,20 @@ public class UserRessource {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
+    @Autowired(required=true)
+
     BusRepository busRepository;
     private final UserServiceInterface userService;
     private final BusServiceInterface busService;
 
 
+
+
     @Autowired(required = true)
-    public UserRessource(UserServiceInterface userService, BusServiceInterface busService) {
+    public UserRessource(UserServiceInterface userService, BusServiceInterface busService, UserService userServiceImp) {
         this.userService = userService;
         this.busService = busService;
+
     }
 
 
@@ -55,12 +60,7 @@ public class UserRessource {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping("/affectToBus/{id}")
-    public void affectUsersToBus(@PathVariable Long id, @RequestBody List<User> users) {
-        userService.affectUsersToBus(id, users);
 
-
-    }
 
     @PostMapping("/{userId}/thisbus/{busId}")
     public ResponseEntity<String> assignBusToUser(@PathVariable Long userId, @PathVariable Long busId) {
@@ -84,6 +84,10 @@ public class UserRessource {
         }
     }
 
+
+
+
+
     @GetMapping("/busbyiduser/{userId}")
     public ResponseEntity<Bus> getBusByUserId(@PathVariable Long userId) {
         Bus bus = this.userService.getBusByUser(userId);
@@ -102,21 +106,21 @@ public class UserRessource {
         }
     }
     @GetMapping("/getUserNotAffected")
-    public void List<User> getUserNotAffected()
+    public  List<User>  getUserNotAffected()
     {
-        return userService.getUserNotAffected();
+        return userRepository.getListUserNotAffected();
 
     }
 
     @GetMapping("/getAffectedUser/{idBus}")
-    public void Lis<User> getAffectedUser(@PathVariable Long idBus)
+    public  List<User> getAffectedUser(@PathVariable Long idBus)
 
     {
         return userService.getAffectedUser(idBus);
     }
 
     @GetMapping("/getAffectedAndNotAffectedUser/{idBus}")
-    public void Lis<User> getAffectedAndNotAffectedUser(@PathVariable Long idBus)
+    public  List<User> getAffectedAndNotAffectedUser(@PathVariable Long idBus)
     {
         return userService.getStationsAffectedAndNotAffected(idBus);
     }

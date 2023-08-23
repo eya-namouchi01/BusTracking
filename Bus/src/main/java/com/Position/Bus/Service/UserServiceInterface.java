@@ -15,5 +15,8 @@ public interface UserServiceInterface {
     Bus getBusByUser(Long id);
 
     void affectUsersToBus(Long id, List<User> users);
+    List<User> getStationsAffectedAndNotAffected(Long id);
     // void deleteUserById(Long id);
+    List<User> getUserNotAffected();
+    List<User> getAffectedUser(Long id);
 }

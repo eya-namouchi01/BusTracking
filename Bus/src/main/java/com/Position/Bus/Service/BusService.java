@@ -121,4 +121,38 @@ public class BusService implements BusServiceInterface {
         }
         return null;
     }
+
+    @Override
+    public void affectUserToBus(Long userId, Long busId) {
+        try
+        {
+            Bus bus = getBusById(busId);
+            Optional<User> userOptional = userRepository.findById(userId);
+            if(userOptional.isPresent())
+            {
+                User user = userOptional.get();
+                user.setBus(bus);
+                userRepository.save(user);
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+    }
+
+    @Override
+    public void affectUsersListToBus(Long busId, List<User> users) {
+        for(User user : users)
+        {
+            try{
+            affectUserToBus(user.getId(), busId); }
+            catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+    }
 }

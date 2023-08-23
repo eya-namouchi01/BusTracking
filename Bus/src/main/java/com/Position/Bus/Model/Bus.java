@@ -2,6 +2,7 @@ package com.Position.Bus.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class Bus implements Serializable {
 
     @OneToOne
     private Circuit circuit;
+
+
+
     public List<User> getUsers() {
         return this.users;
     }
