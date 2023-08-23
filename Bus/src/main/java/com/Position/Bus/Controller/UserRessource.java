@@ -62,17 +62,6 @@ public class UserRessource {
 
     }
 
-
-    //    @PutMapping("/{UserId}/bus/{busId}")
-//    User assignBusToUser(
-//            @PathVariable Long userId,
-//            @PathVariable Long busId
-//    ) {
-//        User user = userRepository.findById(userId).get();
-//        Bus bus = busRepository.findById(busId).get();
-//        user.setBus(bus);
-//        return userRepository.save(user);
-//    }
     @PostMapping("/{userId}/thisbus/{busId}")
     public ResponseEntity<String> assignBusToUser(@PathVariable Long userId, @PathVariable Long busId) {
         try {
@@ -113,18 +102,21 @@ public class UserRessource {
         }
     }
     @GetMapping("/getUserNotAffected")
-    void List<User> getUserNotAffected()
+    public void List<User> getUserNotAffected()
     {
         return userService.getUserNotAffected();
 
     }
+
     @GetMapping("/getAffectedUser/{idBus}")
-    void Lis<User> getAffectedUser(@PathVariable Long idBus)
+    public void Lis<User> getAffectedUser(@PathVariable Long idBus)
+
     {
         return userService.getAffectedUser(idBus);
     }
+
     @GetMapping("/getAffectedAndNotAffectedUser/{idBus}")
-    void Lis<User> getAffectedAndNotAffectedUser(@PathVariable Long idBus)
+    public void Lis<User> getAffectedAndNotAffectedUser(@PathVariable Long idBus)
     {
         return userService.getStationsAffectedAndNotAffected(idBus);
     }
