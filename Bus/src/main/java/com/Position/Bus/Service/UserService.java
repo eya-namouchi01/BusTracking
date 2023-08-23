@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -49,6 +50,34 @@ public class UserService implements UserServiceInterface{
         return bus;
     }
 
+    @Override
+    public void affectUsersToBus(Long id, List<User> users) {
+        Optional<Bus> bus = busRepository.findById(id);
+        if(bus == null){
+            for(User user : users)
+            {
+                System.out.println(user);
+                Optional<User> u =userRepository.findById(user.getId());
+                if(user == null)
+                {
+                    user.setBus(bus.get());
+                    userRepository.save(user);
+                }
+
+
+            }
+        }
+
+
+    }
+    public List<User> getUserNotAffected()
+    {
+        return userRepository.getListUserNotAffected();
+    }
+    public List<User> getAffectedAndNotAffectedUser(Long id)
+    {
+        return userRepository.getStationsAffectedAndNotAffected(id);
+    }
 
 
 }

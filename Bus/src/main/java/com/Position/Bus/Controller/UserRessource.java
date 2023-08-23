@@ -26,7 +26,6 @@ public class UserRessource {
     private final BusServiceInterface busService;
 
 
-
     @Autowired(required = true)
     public UserRessource(UserServiceInterface userService, BusServiceInterface busService) {
         this.userService = userService;
@@ -37,62 +36,60 @@ public class UserRessource {
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users=this.userService.getAll();
-        return new ResponseEntity<>(users,HttpStatus.OK);
+        List<User> users = this.userService.getAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
     @GetMapping("/Code/{userCode}")
     public ResponseEntity<User> getUserByUser(@PathVariable String userCode) {
-        User user= this.userService.getUserByCode(userCode);
+        User user = this.userService.getUserByCode(userCode);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
     @GetMapping("/Codes/{id}")
     public ResponseEntity<List<User>> getUsersByBus(@PathVariable Long id) {
         Bus bus = busService.getBusById(id);
 
 
-        List<User> users= this.userService.getUsersByBus(bus);
+        List<User> users = this.userService.getUsersByBus(bus);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @PostMapping("/affectToBus/{id}")
+    public void affectUsersToBus(@PathVariable Long id, @RequestBody List<User> users) {
+        userService.affectUsersToBus(id, users);
 
 
-
-//    @PutMapping("/{UserId}/bus/{busId}")
-//    User assignBusToUser(
-//            @PathVariable Long userId,
-//            @PathVariable Long busId
-//    ) {
-//        User user = userRepository.findById(userId).get();
-//        Bus bus = busRepository.findById(busId).get();
-//        user.setBus(bus);
-//        return userRepository.save(user);
-//    }
-@PostMapping("/{userId}/thisbus/{busId}")
-public ResponseEntity<String> assignBusToUser(@PathVariable Long userId, @PathVariable Long busId) {
-    try {
-        User user = userService.getUserById(userId);
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
-
-        Bus bus = busService.getBusById(busId);
-        if (bus == null) {
-            return new ResponseEntity<>("Bus not found", HttpStatus.NOT_FOUND);
-        }
-
-        user.setBus(bus);
-        userService.addUser(user);
-
-        return new ResponseEntity<>("Bus assigned to user successfully", HttpStatus.OK);
-    } catch (Exception e) {
-        return new ResponseEntity<>("Error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-}
+
+    @PostMapping("/{userId}/thisbus/{busId}")
+    public ResponseEntity<String> assignBusToUser(@PathVariable Long userId, @PathVariable Long busId) {
+        try {
+            User user = userService.getUserById(userId);
+            if (user == null) {
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
+
+            Bus bus = busService.getBusById(busId);
+            if (bus == null) {
+                return new ResponseEntity<>("Bus not found", HttpStatus.NOT_FOUND);
+            }
+
+            user.setBus(bus);
+            userService.addUser(user);
+
+            return new ResponseEntity<>("Bus assigned to user successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/busbyiduser/{userId}")
     public ResponseEntity<Bus> getBusByUserId(@PathVariable Long userId) {
-      Bus bus= this.userService.getBusByUser(userId);
+        Bus bus = this.userService.getBusByUser(userId);
         return new ResponseEntity<>(bus, HttpStatus.OK);
     }
+
     @PostMapping("/add")
 
     public ResponseEntity<String> saveUser(@RequestBody User user) {
@@ -103,6 +100,25 @@ public ResponseEntity<String> assignBusToUser(@PathVariable Long userId, @PathVa
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 
         }
+    }
+    @GetMapping("/getUserNotAffected")
+    public void List<User> getUserNotAffected()
+    {
+        return userService.getUserNotAffected();
+
+    }
+
+    @GetMapping("/getAffectedUser/{idBus}")
+    public void Lis<User> getAffectedUser(@PathVariable Long idBus)
+
+    {
+        return userService.getAffectedUser(idBus);
+    }
+
+    @GetMapping("/getAffectedAndNotAffectedUser/{idBus}")
+    public void Lis<User> getAffectedAndNotAffectedUser(@PathVariable Long idBus)
+    {
+        return userService.getStationsAffectedAndNotAffected(idBus);
     }
 
     @DeleteMapping("/{id}")

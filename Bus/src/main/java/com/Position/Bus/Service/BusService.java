@@ -38,7 +38,7 @@ public class BusService implements BusServiceInterface {
 //        busRepository.save(bus);
 //    }
     @Override
-    public void saveBus(Bus bus) {
+    public Long saveBus(Bus bus) {
         //Bus bus = new Bus();
 
         var position = this.generateRandomPosition();
@@ -48,7 +48,8 @@ public class BusService implements BusServiceInterface {
 //                orElseThrow(()->new UserNotFoundException("User with ID "+nom+" was not found" ));
         bus.setLongitude(position.get("long"));
         bus.setLatitude(position.get("lat"));
-        busRepository.save(bus);
+        Bus b=busRepository.save(bus);
+        return b.getId();
     }
 
 
