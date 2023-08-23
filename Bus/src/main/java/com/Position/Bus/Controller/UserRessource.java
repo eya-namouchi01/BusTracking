@@ -112,6 +112,22 @@ public class UserRessource {
 
         }
     }
+    @GetMapping("/getUserNotAffected")
+    void List<User> getUserNotAffected()
+    {
+        return userService.getUserNotAffected();
+
+    }
+    @GetMapping("/getAffectedUser/{idBus}")
+    void Lis<User> getAffectedUser(@PathVariable Long idBus)
+    {
+        return userService.getAffectedUser(idBus);
+    }
+    @GetMapping("/getAffectedAndNotAffectedUser/{idBus}")
+    void Lis<User> getAffectedAndNotAffectedUser(@PathVariable Long idBus)
+    {
+        return userService.getStationsAffectedAndNotAffected(idBus);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id)

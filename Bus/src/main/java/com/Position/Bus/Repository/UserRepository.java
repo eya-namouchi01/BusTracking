@@ -12,7 +12,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByUserCode(String userCode);
     Optional<List<User>> findByBus(Bus bus);
 
-   // Optional<List<User>>  getUsersByBus(Bus bus);
+    @Query("SELECT s FROM User s WHERE s.bus.id = null ")
+    List<Station> getListUserNotAffected();
+
+    @Query("SELECT s FROM User s WHERE s.bus.id = null or s.bus.id = :id")
+    List<Station> getStationsAffectedAndNotAffected(Long id);
 }
 
 

@@ -70,6 +70,14 @@ public class UserService implements UserServiceInterface{
 
 
     }
+    public List<User> getUserNotAffected()
+    {
+        return userRepository.getListUserNotAffected();
+    }
+    public List<User> getAffectedAndNotAffectedUser(Long id)
+    {
+        return userRepository.getStationsAffectedAndNotAffected(id);
+    }
 
 
 }
