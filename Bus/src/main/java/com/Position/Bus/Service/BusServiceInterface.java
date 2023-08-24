@@ -29,4 +29,6 @@ public interface BusServiceInterface {
    void affectUserToBus(Long userId, Long busId);
 
     void affectUsersListToBus(Long busId, List<User> users);
+
+    void affectCircuitToBus(Long circuitId, Long busId);
 }

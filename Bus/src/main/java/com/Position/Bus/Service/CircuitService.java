@@ -1,9 +1,7 @@
 package com.Position.Bus.Service;
+import com.Position.Bus.Model.*;
+import com.Position.Bus.Repository.BusRepository;
 import org.springframework.transaction.annotation.Transactional;
-import com.Position.Bus.Model.Circuit;
-import com.Position.Bus.Model.CircuitDetails;
-import com.Position.Bus.Model.CircuitStations;
-import com.Position.Bus.Model.Station;
 import com.Position.Bus.Repository.CircuitRepository;
 import com.Position.Bus.Repository.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +14,13 @@ import java.util.Optional;
 @Service
 public class CircuitService implements  CircuitServiceInterface{
 
+    private final BusRepository busRepository;
     private final CircuitRepository circuitRepository;
     private final StationRepository stationRepository;
 
     @Autowired
-    public CircuitService(CircuitRepository circuitRepository, StationRepository stationRepository) {
+    public CircuitService(BusRepository busRepository, CircuitRepository circuitRepository, StationRepository stationRepository) {
+        this.busRepository = busRepository;
         this.circuitRepository = circuitRepository;
         this.stationRepository = stationRepository;
     }
@@ -113,4 +113,26 @@ public class CircuitService implements  CircuitServiceInterface{
         }
 
     }
+
+    public List<Circuit> getCircuitsListNotAffectedTobus() {
+        List<Circuit> circuitsListNotAffected = new ArrayList<>();
+        List<Bus> busList = busRepository.findAll();
+        List<Circuit> circuitList = circuitRepository.findAll();
+
+        for (Circuit circuit : circuitList) {
+            boolean exists = false;
+            for (Bus bus : busList) {
+                Circuit busCircuit = bus.getCircuit();
+                if (busCircuit != null && busCircuit.getId() == circuit.getId()) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                circuitsListNotAffected.add(circuit);
+            }
+        }
+        return circuitsListNotAffected;
+    }
+
 }

@@ -68,6 +68,12 @@ public class CircuitRessource {
         circuitService.update(id,nom,stations);
     }
 
+    @GetMapping("/circuitsListNotAffectedTobus")
+    public List<Circuit> getCircuitsListNotAffectedTobus()
+    {
+       return circuitService.getCircuitsListNotAffectedTobus();
+    }
+
 
     }
 

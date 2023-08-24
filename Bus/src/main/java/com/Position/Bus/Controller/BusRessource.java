@@ -123,10 +123,9 @@ public Long saveBus(@RequestBody Bus bus) {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBus(@PathVariable("id") Long id){
+    @DeleteMapping("/{id}")
+    public void deleteBus(@PathVariable("id") Long id){
         this.busService.deleteBus(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/find")
@@ -150,9 +149,15 @@ public Long saveBus(@RequestBody Bus bus) {
     public void affectUserToBus(@PathVariable  Long busId,@RequestBody List<User> users)
     {
         busService.affectUsersListToBus(busId,users);
-
-
     }
+
+    @PostMapping("/affectCircuitToBus/{CircuitId}/{BusId}")
+    public void affectCircuitToBus(@PathVariable Long CircuitId, @PathVariable Long BusId)
+    {
+        busService.affectCircuitToBus(CircuitId,BusId);
+    }
+
+
 
 
 

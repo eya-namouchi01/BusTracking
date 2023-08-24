@@ -28,15 +28,6 @@ public class BusService implements BusServiceInterface {
 
 
 
-
- //   @Override
-//    public void saveBus() {
-//        Bus bus = new Bus();
-//        var position = this.generateRandomPosition();
-//        bus.setLongitude(position.get("long"));
-//        bus.setLatitude(position.get("lat"));
-//        busRepository.save(bus);
-//    }
     @Override
     public Long saveBus(Bus bus) {
         //Bus bus = new Bus();
@@ -109,9 +100,9 @@ public class BusService implements BusServiceInterface {
     public Bus updateBus(Bus bus) {
        return this.busRepository.save(bus);}
 
-    public void deleteBus(Long id) {
-        this.busRepository.deleteById(id);
-    }
+
+
+
     public Optional<List<User>> getUsersByBusId(long id) {
         Optional<Bus> bus = busRepository.findById(id);
 
@@ -154,5 +145,42 @@ public class BusService implements BusServiceInterface {
                 System.out.println(e);
             }
         }
+    }
+
+    @Override
+    public void affectCircuitToBus(Long circuitId, Long busId) {
+
+       Optional<Circuit> circuitOptional = circuitRepository.findById(circuitId);
+        if(circuitOptional.isPresent())
+        {
+            Circuit circuit = circuitOptional.get();
+            Optional<Bus> busOptional = busRepository.findById(busId);
+            if(busOptional.isPresent())
+            {
+                Bus bus = busOptional.get();
+                bus.setCircuit(circuit);
+                busRepository.save(bus);
+
+            }
+
+        }
+        //busRepository.affectCircuitToBus(circuitId,busId);
+    }
+
+    @Override
+    public void deleteBus(Long id) {
+        Optional<Bus> bus = busRepository.findById(id);
+        if (bus.isPresent()) {
+            Optional<List<User>> usersOptional = userRepository.findByBus(bus.get());
+            if(usersOptional.isPresent())
+            {
+               // List<User> users = usersOptional.get();
+                    userRepository.disassociateUserBus(id);
+
+            }
+            busRepository.deleteById(id);
+        }
+
+
     }
 }
