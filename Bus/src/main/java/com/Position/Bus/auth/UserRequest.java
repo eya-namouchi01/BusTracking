@@ -12,6 +12,4 @@ import lombok.NoArgsConstructor;
 public class UserRequest {
     private String nom;
     private String prenom;
-
-
 }

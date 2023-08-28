@@ -3,6 +3,7 @@ package com.Position.Bus.Controller;
 import com.Position.Bus.Model.*;
 import com.Position.Bus.Repository.BusRepository;
 import com.Position.Bus.Repository.UserRepository;
+import com.Position.Bus.RequestModel.PasswordChangeRequest;
 import com.Position.Bus.Service.BusServiceInterface;
 import com.Position.Bus.Service.UserService;
 import com.Position.Bus.Service.UserServiceInterface;
@@ -130,6 +131,14 @@ public class UserRessource {
     {
         userRepository.deleteById(id);
     }
+
+
+    @PutMapping("/changePassword")
+    public boolean changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest)
+    {
+       return  userService.changePassword(passwordChangeRequest);
+    }
+
 
 
 }

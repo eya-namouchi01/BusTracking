@@ -3,13 +3,14 @@ package com.Position.Bus.Service;
 import com.Position.Bus.Model.*;
 import com.Position.Bus.Repository.BusRepository;
 import com.Position.Bus.Repository.UserRepository;
+import com.Position.Bus.RequestModel.PasswordChangeRequest;
+import com.Position.Bus.auth.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.*;
 @Service
@@ -17,6 +18,17 @@ public class UserService implements UserServiceInterface{
     @Autowired(required=true)
     private  UserRepository userRepository;
     private BusRepository busRepository;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationService authenticationService;
+
+    public UserService(UserRepository userRepository, BusRepository busRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, AuthenticationService authenticationService) {
+        this.userRepository = userRepository;
+        this.busRepository = busRepository;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationService = authenticationService;
+    }
 
     @Override
     public List<User> getAll() {
@@ -87,6 +99,29 @@ public class UserService implements UserServiceInterface{
     public List<User> getAffectedUser(Long id)
     {
         return userRepository.getAffectedUser(id);
+    }
+
+    @Override
+    public boolean changePassword(PasswordChangeRequest passwordChangeRequest) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            passwordChangeRequest.getCuid(),
+                            passwordChangeRequest.getCurrentPassword()
+                    )
+            );
+        } catch (AuthenticationException e) {
+            return false;
+        }
+          User user =  getUserByCode(passwordChangeRequest.getCuid());
+          String newPassword = passwordEncoder.encode(passwordChangeRequest.getNewPassword());
+          user.setPassword(newPassword);
+          userRepository.save(user);
+          return true;
+
+
+
+
     }
 
 

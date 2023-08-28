@@ -71,4 +71,8 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .build();
     }
+    public Boolean comparePassword(String passwordEncoded, String passwordNoEncoded)
+    {
+        return passwordEncoded.equals(passwordEncoder.encode(passwordNoEncoded));
+    }
 }

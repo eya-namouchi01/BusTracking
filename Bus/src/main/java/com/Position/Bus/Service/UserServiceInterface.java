@@ -1,6 +1,7 @@
 package com.Position.Bus.Service;
 
 import com.Position.Bus.Model.*;
+import com.Position.Bus.RequestModel.PasswordChangeRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface UserServiceInterface {
     // void deleteUserById(Long id);
     List<User> getUserNotAffected();
     List<User> getAffectedUser(Long id);
+
+    boolean changePassword(PasswordChangeRequest passwordChangeRequest);
 }
