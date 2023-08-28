@@ -74,6 +74,13 @@ public class CircuitRessource {
        return circuitService.getCircuitsListNotAffectedTobus();
     }
 
+    @GetMapping("/circuitsListNotAffectedAndAffected/{id}")
+    public List<Circuit> getCircuitsListNotAffectedAndAffected(@PathVariable Long id)
+    {
+        return circuitService.getCircuitsListNotAffectedAndAffected(id);
+
+    }
+
 
     }
 

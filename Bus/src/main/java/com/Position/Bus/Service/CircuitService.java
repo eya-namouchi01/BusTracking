@@ -135,4 +135,18 @@ public class CircuitService implements  CircuitServiceInterface{
         return circuitsListNotAffected;
     }
 
+    public List<Circuit> getCircuitsListNotAffectedAndAffected(Long id) {
+        List<Circuit> circuits = getCircuitsListNotAffectedTobus();
+        Optional<Bus> busOptional = busRepository.findById(id);
+        if(busOptional.isPresent())
+        {
+            Bus bus = busOptional.get();
+            if(bus.getCircuit() != null)
+            {
+                circuits.add(bus.getCircuit());
+            }
+        }
+        return circuits;
+
+    }
 }
